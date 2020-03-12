@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ICS BLOB TEST</title>
+  </head>
+  <body>
+    <div>
+      <a id="dld" href="javascript:void()">
+        Click to download
+      </a>
+    </div>
+    <script>
+      const _today = new Date().toISOString();    
+      let payPart = {
+        isoDate: {
+          start: '20200229',
+          end: '20200301'
+        },
+        desc: 'This is a great event and you are invited!'
+      };
+      let icsMSG = 'BEGIN:VCALENDAR\n' +
+        'PRODID:-//Rafael Kuvasney Marcolin//PT\n' +
+        'VERSION:2.0\n' +
+        'BEGIN:VEVENT\n' +
+        'DTSTAMP:' + _today + '\n' +
+        'STATUS:CONFIRMED\n' +
+        'UID:empty\n' +
+        'SEQUENCE:0\n' +
+        'DTSTART;VALUE=DATE:' + payPart.isoDate.start + '\n' +
+        'DTEND;VALUE=DATE:' + payPart.isoDate.end + '\n' +
+        'SUMMARY:' + payPart.desc.replace(/\+/g,' ') + '\n' +
+        'DESCRIPTION:' + payPart.desc.replace(/\+/g,' ') + '\n' +
+        'X-ALT-DESC;FMTTYPE=text/html:' + payPart.desc.replace(/\+/g,' ') + '\n' +
+        'LOCATION:\n' +
+        'BEGIN:VALARM\n' +
+        'TRIGGER:-PT15M\n' +
+        'ACTION:DISPLAY\n' +
+        'DESCRIPTION:Reminder\n' +
+        'END:VALARM\n' +
+        'TRANSP:OPAQUE\n' +
+        'END:VEVENT\n' +
+        'END:VCALENDAR;'
+
+        let dld = document.getElementById('dld');
+        dld.onclick = function(event) {
+          let blob = new Blob([icsMSG], {type: 'text/calendar;charset=utf-8'})
+          let url = window.URL.createObjectURL( blob );
+          this.href = url;
+          this.download = 'the-big-event.ics'
+
+        };
+
+        
+        
+    </script>
+  </body>
+</html>
